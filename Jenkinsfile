@@ -16,9 +16,9 @@
     stage ('Build') {
       steps {
         sh 'ls'
-        sh 'mkdir /.npm'
+        sh 'pwd'
         sh 'npm install --verbose'
-        sh 'bash'
+        sh 'ls'
       }
     }
   }
