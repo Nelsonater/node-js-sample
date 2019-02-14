@@ -18,6 +18,7 @@
         sh 'ls'
         sh 'mkdir /.npm'
         sh 'npm install --verbose'
+        sh 'bash'
       }
     }
   }
