@@ -1,7 +1,10 @@
  pipeline {
 
   agent {
-    docker { image 'node:8' }
+    docker {
+      image 'node:8'
+      args '--tmpfs /.config'
+    }
   }
   stages {
     stage('Checkout'){
