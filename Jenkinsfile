@@ -1,16 +1,16 @@
  pipeline {
 
-  agent any
+  agent {
+    docker { image 'node:8-alpine' }
+  }
   stages {
     stage('Checkout'){
-      agent { label 'Node8'}
       steps {
         checkout scm
       }
     }
 
     stage ('Build') {
-      agent { label 'Node8'}
       steps {
         sh 'npm install'
       }
