@@ -3,9 +3,12 @@
   agent {
     docker {
       image 'node:8'
-      args '-u root:root'
+      args '-u 0:0'
       reuseNode true
     }
+  }
+  environment {
+    ARTIFACTORY_URL = credentials('artifactoryURL')
   }
   stages {
     stage('Checkout'){
@@ -13,13 +16,20 @@
         checkout scm
       }
     }
-
     stage ('Build') {
       steps {
-        sh 'ls'
-        sh 'pwd'
         sh 'npm install --verbose'
-        sh 'ls'
+      }
+    }
+    stage ('Deploy') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: "artifactoryCreds", passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+          sh "curl -k -u $USERNAME:$PASSWORD ${env.ARTIFACTORY_URL}/artifactory/api/npm/auth > .npmrc"               
+        }
+        sh "echo 'registry=${env.ARTIFACTORY_URL}/artifactory/api/npm/alex-npm' >> .npmrc"
+        sh 'echo "email=alexn@fake.email" >> .npmrc'
+        sh 'echo "strict-ssl=false" >> .npmrc'
+        sh 'npm publish'
       }
     }
   }
