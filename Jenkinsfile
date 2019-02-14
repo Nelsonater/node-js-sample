@@ -4,6 +4,7 @@
     docker {
       image 'node:8'
       args '-u root:root'
+      reuseNode true
     }
   }
   stages {
