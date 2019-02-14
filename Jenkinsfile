@@ -12,7 +12,9 @@
 
     stage ('Build') {
       steps {
-        sh 'npm install'
+        sh 'ls'
+        sh 'mkdir /.npm'
+        sh 'npm install --verbose'
       }
     }
   }
