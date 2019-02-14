@@ -3,7 +3,7 @@
   agent {
     docker {
       image 'node:8'
-      args '--tmpfs /.config'
+      args '-u root:root'
     }
   }
   stages {
