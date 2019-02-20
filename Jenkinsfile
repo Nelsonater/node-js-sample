@@ -32,6 +32,12 @@
         sh 'npm publish'
       }
     }
+    stage ('Static Code Analysis') {
+      def scannerHome = tool 'sonarScanner';
+      withSonarQubeEnv('SonarQube Server') {
+        sh "${scannerHome}/bin/sonar-scanner"
+      }
+    }
   }
 }
 
